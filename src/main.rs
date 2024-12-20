@@ -6,19 +6,24 @@ enum Message {
     Increment,
 }
 
-fn update(counter: &mut u64, message: Message) {
+#[derive(Default)]
+struct Counter {
+    value: u64,
+}
+
+fn update(counter: &mut Counter, message: Message) {
     match message {
-        Message::Increment => *counter += 1,
+        Message::Increment => counter.value += 1,
     }
 }
 
-fn view(counter: &u64) -> Element<Message> {
-    button(text(counter)).on_press(Message::Increment).into();
+fn view(counter: &Counter) -> Element<Message> {
+    button(text(counter.value)).on_press(Message::Increment).into()
 }
 
 
 pub fn main() -> iced::Result {
-    iced::run("A cool counter", update, view)
+    iced::run("Testing App", update, view)
 }
 
 
